@@ -10,7 +10,6 @@ typedef struct{
 
 // Declaração das funções do módulo clientes
 
-void cadastrarCliente();
-void listarClientes();
+void gerenciamentoCLientes();
 
 #endif // CLIENTES_H

@@ -11,8 +11,7 @@ typedef struct{
 
 // Declaração das funções do módulo saudacao
 
-void cadastrarAnimal();
-void listarAnimais();
+void gerenciamentoAnimais();
 
 
 

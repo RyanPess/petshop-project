@@ -1,6 +1,10 @@
 #include <stdio.h>
-#include "clientes.h"  // Inclui o módulo calculadora
+
+//Modulos implementados
+#include "clientes.h"
 #include "animais.h"
+#include "agendamentos.h"
+#include "relatorios.h"
 
 int main() {
     //Definimos a quantidade de clientes e animais que o sistema suporta
@@ -11,13 +15,11 @@ int main() {
 
     while(1){
         printf("::::::::::: MENU PETSHOP ::::::::::\n\n");
-        printf("1 - Cadastrar Cliente\n");
-        printf("2 - Cadastrar Animal\n");
-        printf("3 - Listar Clientes\n");
-        printf("4 - Listar Animais\n");
-        printf("5 - Listar produtos / servicos\n");
-        printf("6 - Agendamento\n");
-        printf("7 - Relatório financeiro\n");
+        printf("1 - Gerenciamento de Clientes\n");
+        printf("2 - Gerenciamento de Animais\n");
+        printf("3 - Gerenciamento de Produtos\n");
+        printf("4 - Agendamento\n");
+        printf("5 - Relatório financeiro\n");
         printf("0 - Encerrar programa\n");
 
         printf("\n\nEscolha uma opção: ");
@@ -25,30 +27,22 @@ int main() {
         
         switch(opcao){
             case 1:
-                printf("::::::::::: Cadastro cliente ::::::::::\n\n");
-                //cadastrarCliente();
+                printf("::::::::::: Gerenciamento cliente ::::::::::\n\n");
+                //gerenciamentoClientes();
                 break;
             case 2:
-                printf("::::::::::: Cadastro animal ::::::::::\n\n");
-                //cadastrarAnimal();
+                printf("::::::::::: Gerenciamento animal ::::::::::\n\n");
+                //gerenciamentoAnimais();
                 break;
             case 3:
-                printf("::::::::::: Listar clientes ::::::::::\n\n");
-                //listarClientes();
+                printf("::::::::::: Gerenciamento produtos::::::::::\n\n");
+                //gerenciamentoProdutos();
                 break;
             case 4:
-                printf("::::::::::: Listar animais ::::::::::\n\n");
-                //listarAnimais();
-                break;
-            case 5:
-                printf("::::::::::: Listar produtos / servicos ::::::::::\n\n");
-                //listarProdutosServicos();
-                break;
-            case 6:
                 printf("::::::::::: Agendamento ::::::::::\n\n");
                 //agenda();
                 break;
-            case 7:
+            case 5:
                 printf("::::::::::: Relatório financeiro ::::::::::\n\n");
                 //relatorioFinanceiro();
                 break;
