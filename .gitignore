@@ -1,0 +1,23 @@
+# Diretórios e arquivos do CMake
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+*.cmake
+
+# Diretórios e arquivos gerados durante a compilação
+build/
+*.o
+*.obj
+*.exe
+*.out
+*.dll
+*.a
+*.lib
+
+# Arquivos de backup de editores
+*~
+*.swp
+
+# Arquivos temporários
+*.log
