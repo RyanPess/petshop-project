@@ -9,7 +9,7 @@
 
 // Implementação das funções do módulo clientes
 
-static cadastrarCliente(){
+static void cadastrarCliente(){
 
 }
 
@@ -22,7 +22,7 @@ static void editarCliente(){
 }
 
 //Por enquanto, será a função main
-//quando terminarmos de implementar, será a função gerenciamentoCLientes()
+//quando terminarmos de implementar, será a função gerenciamentoClientes()
 
 int main(){
     setlocale(LC_ALL, "Portuguese_Brazil.1252");
