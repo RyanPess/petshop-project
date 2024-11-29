@@ -3,9 +3,9 @@
 
 
 //Estrutura de um agendamento
-typedef struct{
+// typedef struct{
 
-}Agendamento;
+// }Agendamento;
 
 //// Declaração das funções do módulo agendamentos
 

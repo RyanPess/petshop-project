@@ -14,7 +14,7 @@ static void relatorioClientes(){
     // Implementação do relatório de clientes
 }
 
-int main(){
+void relatorioFinanceiro(){
     // Inicializa o locale para suportar caracteres acentuados
     setlocale(LC_ALL, "Portuguese");
     
@@ -41,5 +41,5 @@ int main(){
         }
     }
     
-    return 0;
+   // return 0;
 }

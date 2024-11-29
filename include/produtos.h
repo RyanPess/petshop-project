@@ -5,9 +5,9 @@
 
 // Estrutura do produto
 
-typedef struct{
-    //Implementar estrutura
-} Produto;
+// typedef struct{
+//     //Implementar estrutura
+// } Produto;
 
 void gerenciamentoProdutos();
 

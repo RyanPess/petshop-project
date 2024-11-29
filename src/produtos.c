@@ -27,7 +27,7 @@ void atualizarEstoque(){
 //Por enquanto, será a função main
 //quando terminarmos de implementar, será a função gerenciamentoProdutos()
 
-int main(){
+void gerenciamentoProdutos(){
     setlocale(LC_ALL, "Portuguese");
     int opcao;
 

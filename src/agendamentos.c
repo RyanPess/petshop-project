@@ -27,7 +27,7 @@ static void alterarAgendamento(){
 //Por enquanto, será a função main
 //quando terminarmos de implementar, será a função agenda()
 
-int main(){
+void agenda(){
     setlocale(LC_ALL, "Portuguese");
     int opcao;
 
@@ -61,5 +61,5 @@ int main(){
         }
     }
     
-    return 0;
+    //return 0;
 }

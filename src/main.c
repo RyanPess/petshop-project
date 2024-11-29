@@ -2,14 +2,14 @@
 
 //Modulos implementados
 #include "clientes.h"
-#include "animais.h"
-#include "agendamentos.h"
-#include "relatorios.h"
+//#include "animais.h"
+//#include "agendamentos.h"
+//#include "relatorios.h"
 
 int main() {
     //Definimos a quantidade de clientes e animais que o sistema suporta
-    Cliente clientes[MAX_CLIENTES];  
-    Animal animais[MAX_ANIMAIS];
+    //Cliente clientes[MAX_CLIENTES];  
+    //Animal animais[MAX_ANIMAIS];
 
     int opcao;
 
@@ -28,7 +28,7 @@ int main() {
         switch(opcao){
             case 1:
                 printf("::::::::::: Gerenciamento cliente ::::::::::\n\n");
-                //gerenciamentoClientes();
+                gerenciamentoClientes();
                 break;
             case 2:
                 printf("::::::::::: Gerenciamento animal ::::::::::\n\n");

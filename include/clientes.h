@@ -5,11 +5,14 @@
 
 // Estrutura do cliente
 typedef struct{
-    char name[50];
+    char name[100];
+    char cpf[11];
+    int idade;
+    int numCadastro; //cada cliente terá um número de cadastro único
 } Cliente;
 
 // Declaração das funções do módulo clientes
 
-void gerenciamentoCLientes();
+void gerenciamentoClientes();  
 
 #endif // CLIENTES_H

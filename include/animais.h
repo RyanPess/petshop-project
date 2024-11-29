@@ -5,9 +5,9 @@
 #define MAX_ANIMAIS 200
 
 //Estrutura do animal
-typedef struct{
-    char name[50];
-}Animal;
+// typedef struct{
+//     char name[50];
+// }Animal;
 
 // Declaração das funções do módulo saudacao
 

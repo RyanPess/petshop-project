@@ -22,7 +22,7 @@ static void editarAnimais(){
 //Por enquanto, será a função main
 //quando terminarmos de implementar, será a função gerenciamentoAnimais()
 
-int main(){
+void gerenciamentoAnimais(){
     setlocale(LC_ALL, "Portuguese");
     int opcao;
     while(1){
@@ -51,6 +51,6 @@ int main(){
         }
     }
     
-    return 0;
+//    return 0;
         
 }
