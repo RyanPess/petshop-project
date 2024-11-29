@@ -14,6 +14,17 @@ static void listarClientes();
 //COMO ARMAZENAR OS DADOS DE CADA CLIENTE??? CRIAR UM VETOR PARA CADA ATRIBUTO DA STRUCT?
 static void editarCliente();
 
+static void cadastrarCliente(){
+
+}
+
+static void listarClientes(){
+
+}
+
+static void editarCliente(){
+
+}
 
 //Por enquanto, será a função main
 //quando terminarmos de implementar, será a função gerenciamentoClientes()
@@ -53,7 +64,7 @@ void gerenciamentoClientes(){
 }
 
 static void salvarCliente(Cliente cliente){
-    FILE *arquivo = fopen("", "a");
+    FILE *arquivo = fopen("db_clientes.csv", "a");
     if(arquivo==NULL){
         printf("Erro ao abrir o arquivo!\n");
         return;

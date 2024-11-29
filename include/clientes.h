@@ -5,10 +5,10 @@
 
 // Estrutura do cliente
 typedef struct{
-    char name[100];
+    char name[50];
     char cpf[11];
     int idade;
-    int numCadastro; //cada cliente terá um número de cadastro único
+    int codCliente;
 } Cliente;
 
 // Declaração das funções do módulo clientes
