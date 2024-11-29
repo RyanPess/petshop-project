@@ -4,35 +4,22 @@
 #include <stdbool.h>
 #include <locale.h>
 #include "clientes.h"
-//#include "petshop-project/include/clientes.h"
-//VERIFICAR UMA FORMA DE IMPLEMENTAR A BIBLIOTECA CLIENTE.H
+//Constante, diretório do banco de dados dos clientes
+const char *db_clientes = "data/db_clientes.csv";
 
 // Implementação das funções do módulo clientes
 static void salvarCliente(Cliente cliente);
 static void cadastrarCliente();
 static void listarClientes();
-//COMO ARMAZENAR OS DADOS DE CADA CLIENTE??? CRIAR UM VETOR PARA CADA ATRIBUTO DA STRUCT?
 static void editarCliente();
 
-static void cadastrarCliente(){
-
-}
-
-static void listarClientes(){
-
-}
-
-static void editarCliente(){
-
-}
 
 //Por enquanto, será a função main
 //quando terminarmos de implementar, será a função gerenciamentoClientes()
 
 void gerenciamentoClientes(){
-    setlocale(LC_ALL, "Portuguese_Brazil.1252");
+    setlocale(LC_ALL, "pt_BR.UTF8");
     int opcao;
-    printf("\n::::BEM VINDO A ÁREA DE GERENCIAMENTO DE CLIENTES:::::\n POR FAVOR, ESCOLHA UMA DAS OPÇÕES\n");
     while (1){
         printf("1 - Cadastrar Cliente\n");
         printf("2 - Listar Clientes\n");
@@ -60,11 +47,10 @@ void gerenciamentoClientes(){
         }
     } 
 
-    //return 0;
 }
 
 static void salvarCliente(Cliente cliente){
-    FILE *arquivo = fopen("db_clientes.csv", "a");
+    FILE *arquivo = fopen(db_clientes, "a");
     if(arquivo==NULL){
         printf("Erro ao abrir o arquivo!\n");
         return;
@@ -73,7 +59,7 @@ static void salvarCliente(Cliente cliente){
     fprintf(arquivo, "%s, %s, %d\n", cliente.name, cliente.cpf, cliente.idade);
     fclose(arquivo);
 
-    printf("\nCliente cadastrado com sucesso!");
+    printf("\nCliente cadastrado com sucesso!\n");
 }
 static void cadastrarCliente(){
     Cliente newCliente;
@@ -91,12 +77,12 @@ static void cadastrarCliente(){
     printf("Qual a idade do cliente? ");
     scanf("%d",&newCliente.idade);
     if(newCliente.idade < 18){
-        printf("Idade inválida! O cliente deve ser maior de 18 anos.\n");
+        printf("\nIdade inválida! O cliente deve ser maior de 18 anos.\n");
         return;
     }
 
     if(strlen(newCliente.name) <= 1 || strlen(newCliente.cpf) <= 1){
-        printf("Todos os campos devem ser preenchidos com dados corretos!\n");
+        printf("\nTodos os campos devem ser preenchidos com dados corretos!\n");
         return;
     }
     

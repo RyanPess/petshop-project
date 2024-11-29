@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 //Modulos implementados
 #include "clientes.h"
@@ -7,9 +8,6 @@
 //#include "relatorios.h"
 
 int main() {
-    //Definimos a quantidade de clientes e animais que o sistema suporta
-    //Cliente clientes[MAX_CLIENTES];  
-    //Animal animais[MAX_ANIMAIS];
 
     int opcao;
 
