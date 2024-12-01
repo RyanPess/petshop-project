@@ -90,7 +90,32 @@ static void cadastrarCliente(){
 }
 
 static void listarClientes(){
-    printf("\nTodos clientes cadastrados no petshop\n");
+   
+    FILE *arquivo = fopen(db_clientes, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo! Verifique se ele existe e tente novamente.\n");
+        return;
+    }
+
+    printf("\nLista de Clientes Cadastrados:\n");
+    printf("---------------------------------------\n");
+    printf("| Nome                   | CPF       | Idade |\n");
+    printf("---------------------------------------\n");
+
+    char linha[256];
+    while (fgets(linha, sizeof(linha), arquivo) !=NULL) { 
+        char nome[100], cpf[12];
+        int idade;
+
+        // Divide a linha nos campos nome, cpf e idade usando sscanf
+        if (sscanf(linha, "%99[^,],%11[^,],%d", nome, cpf, &idade) == 3) {
+            printf("| %-22s | %-9s | %5d |\n", nome, cpf, idade);
+        }
+    
+
+    printf("---------------------------------------\n");
+    }
+    fclose(arquivo);
 }
 
 static void editarCliente(){
