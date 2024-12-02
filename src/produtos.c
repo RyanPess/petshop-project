@@ -9,8 +9,7 @@
 const char *db_produtos = "data/db_produtos.csv";
 int totalProdutos = 29;
 
-static void salvarProduto(Produto produto) {
-    const char *db_produtos = "produtos.csv";
+static void salvarProduto(Produto produto, int idAtual) {
 
     FILE *arquivo = fopen(db_produtos, "a");
     if (arquivo == NULL) {
@@ -20,7 +19,8 @@ static void salvarProduto(Produto produto) {
 
     fprintf(
         arquivo, 
-        "%s,%s,%s,%s,%.2f,%d\n", 
+        "%d,%s,%s,%s,%s,%.2f,%d\n", 
+        idAtual,
         produto.categoria, 
         produto.tipoAnimal, 
         produto.marca, 
@@ -35,14 +35,29 @@ static void salvarProduto(Produto produto) {
 }
 // Implementação das funções do módulo produtos
 
-static void cadastrarProduto(){
+static void cadastrarProduto() {
     Produto newProduto;
+
+    // Verificando o total de produtos cadastrados no arquivo
+    FILE *arquivo = fopen(db_produtos, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
     
-    if (totalProdutos >= 200) {
- printf("Capacidade m�xima de produtos atingida.\n");
-    return;
+    int contadorProdutos = 0;
+    char linha[256];
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        contadorProdutos++;
+    }
+    fclose(arquivo);
+    
+    if (contadorProdutos >= 200) {
+        printf("Capacidade máxima de produtos atingida.\n");
+        return;
     }
 
+    // Recebendo as informações do produto
     printf("Digite a categoria do produto: ");
     setbuf(stdin, NULL);
     fgets(newProduto.categoria, 50, stdin);
@@ -55,26 +70,34 @@ static void cadastrarProduto(){
     setbuf(stdin, NULL);
     fgets(newProduto.marca, 50, stdin);
     newProduto.marca[strcspn(newProduto.marca, "\n")] = 0;
-    printf("Digite a descri��o do produto: ");
+    printf("Digite a descrição do produto: ");
     setbuf(stdin, NULL);
     fgets(newProduto.descricao, 100, stdin);
     newProduto.descricao[strcspn(newProduto.descricao, "\n")] = 0;
-    printf("Digite o pre�o do produto: ");
-    scanf("%f",&newProduto.preco);
-    printf("Digite a quantidade em estoque: ");
-    scanf("%d", &newProduto.estoque);
+    printf("Digite o preço do produto: ");
 
-    if(strlen(newProduto.categoria) <= 1 || strlen(newProduto.descricao) <= 1  || strlen(newProduto.marca) <= 1  || strlen(newProduto.tipoAnimal) <= 1){
+    while (scanf("%f", &newProduto.preco) != 1 || newProduto.preco <= 0) {
+        printf("Preço inválido. Digite novamente: ");
+        setbuf(stdin, NULL); // Limpar o buffer do teclado
+    }
+
+    printf("Digite a quantidade em estoque: ");
+    while (scanf("%d", &newProduto.estoque) != 1 || newProduto.estoque < 0) {
+        printf("Quantidade inválida. Digite novamente: ");
+        setbuf(stdin, NULL);
+    }
+
+    if (strlen(newProduto.categoria) <= 1 || strlen(newProduto.descricao) <= 1 || 
+        strlen(newProduto.marca) <= 1 || strlen(newProduto.tipoAnimal) <= 1) {
         printf("\nTodos os campos devem ser preenchidos com dados corretos!\n");
         return;
     }
-    totalProdutos++;
-    salvarProduto(newProduto);
 
+    totalProdutos++;
+    salvarProduto(newProduto, totalProdutos);
 }
 
 static void listarProdutos() {
-    
     FILE *arquivo = fopen(db_produtos, "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo! Verifique se ele existe e tente novamente.\n");
@@ -82,36 +105,27 @@ static void listarProdutos() {
     }
 
     printf("\nLista de Produtos Cadastrados:\n");
-    printf("-----------------------------------------------------------------------------------------------\n");
-    printf("| Categoria             | Tipo Animal       | Marca              | Descrição            | Preço   | Estoque |\n");
-    printf("-----------------------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------\n");
+    printf("|   ID    | Categoria             | Tipo Animal       | Marca              | Descrição            | Preço   | Estoque |\n");
+    printf("-----------------------------------------------------------------------------------------------------------------------\n");
 
     char linha[256];
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
         Produto produto;
 
         // Divide a linha nos campos usando sscanf
-        if (sscanf(
-                linha, 
-                "%49[^,],%29[^,],%49[^,],%99[^,],%f,%d",
-                produto.categoria,
-                produto.tipoAnimal,
-                produto.marca,
-                produto.descricao,
-                &produto.preco,
-                &produto.estoque) == 6) {
+        if (sscanf(linha, "%d,%49[^,],%29[^,],%49[^,],%99[^,],%f,%d", 
+                    &produto.id, produto.categoria, produto.tipoAnimal, 
+                    produto.marca, produto.descricao, &produto.preco, 
+                    &produto.estoque) == 7) {
             // Exibe os dados do produto
-            printf("| %-20s | %-16s | %-18s | %-20s | %7.2f | %7d |\n",
-                   produto.categoria,
-                   produto.tipoAnimal,
-                   produto.marca,
-                   produto.descricao,
-                   produto.preco,
-                   produto.estoque);
+            printf("| %7d | %-20s | %-16s | %-18s | %-20s | %7.2f | %7d |\n", 
+                    produto.id, produto.categoria, produto.tipoAnimal, 
+                    produto.marca, produto.descricao, produto.preco, produto.estoque);
         }
     }
+    printf("-----------------------------------------------------------------------------------------------------------------------\n");
 
-    printf("-----------------------------------------------------------------------------------------------\n");
     fclose(arquivo);
 }
 
