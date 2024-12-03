@@ -7,7 +7,57 @@
 #include "produtos.h"
 
 const char *db_produtos = "data/db_produtos.csv";
+const char *arqTemp = "data/temp.csv";
 int totalProdutos = 29;
+
+static void salvarProduto(Produto produto, int idAtual);
+static void cadastrarProduto();
+static void listarProdutos();
+static void buscarProdutoByID();
+static void alterarPreco();
+static void atualizarEstoque();
+
+
+//Por enquanto, será a função main
+//quando terminarmos de implementar, será a função gerenciamentoProdutos()
+
+void gerenciamentoProdutos(){
+    //setlocale(LC_ALL, "Portuguese");
+    int opcao;
+    while(1){
+        printf("1 - Cadastrar novo produto\n");
+        printf("2 - Listar produtos\n");
+        printf("3 - Buscar produto por ID\n");
+        printf("4 - Alterar preco de um produto\n");
+        printf("5 - Atualizar estoque\n");
+        printf("0 - Voltar\n");
+
+        scanf("%d", &opcao);
+        
+        switch(opcao){
+            case 1:
+                cadastrarProduto();
+                break;
+            case 2:
+                listarProdutos();
+                break;
+            case 3:
+                buscarProdutoByID();
+                break;
+            case 4:
+                alterarPreco();
+                break;
+            case 5:
+                atualizarEstoque();
+                break;
+            case 0:
+                return;
+            default:
+                printf("Opção inválida. Tente novamente!\n");
+                break;
+        }
+    }
+}
 
 static void salvarProduto(Produto produto, int idAtual) {
 
@@ -129,47 +179,166 @@ static void listarProdutos() {
     fclose(arquivo);
 }
 
-void alterarPreco(){
-    // Implementar a função para alterar o preço de um produto
-}
-
-void atualizarEstoque(){
-    // Implementar a função para atualizar o estoque de um produto
-}
-
-//Por enquanto, será a função main
-//quando terminarmos de implementar, será a função gerenciamentoProdutos()
-
-void gerenciamentoProdutos(){
-    setlocale(LC_ALL, "Portuguese");
-    int opcao;
-    while(1){
-        printf("1 - Cadastrar novo produto\n");
-        printf("2 - Listar produtos\n");
-        printf("3 - Alterar preço de um produto\n");
-        printf("4 - Atualizar estoque de um produto\n");
-        printf("0 - Voltar\n");
-
-        scanf("%d", &opcao);
+static void buscarProdutoByID(){
+    int id;
+    Produto produto;
+    
+    printf("Digite o ID do produto: ");
+    scanf("%d", &id);
+    if (id <= 0) {
+        printf("ID inválido!\n");
+        return;
+    }
+    
+    bool encontrado = false;
+    FILE *arquivo = fopen(db_produtos, "r");
+    FILE *temp = fopen(arqTemp, "w");
+    if (arquivo == NULL || temp == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), arquivo)!= NULL) {
+        sscanf(buffer, "%d,%49[^,],%29[^,],%49[^,],%99[^,],%f,%d", 
+            &produto.id, produto.categoria, produto.tipoAnimal, 
+            produto.marca, produto.descricao, &produto.preco, 
+            &produto.estoque);
         
-        switch(opcao){
-            case 1:
-                cadastrarProduto();
-                break;
-            case 2:
-                listarProdutos();
-                break;
-            case 3:
-                alterarPreco();
-                break;
-            case 4:
-                atualizarEstoque();
-                break;
-            case 0:
-                return;
-            default:
-                printf("Opção inválida. Tente novamente!\n");
-                break;
+        if (produto.id == id) {
+            encontrado = true;
+            printf("\n::::::::::Produto encontrado::::::::::\n");
+            printf("id: %d\n", produto.id);
+            printf("Categoria: %s\n", produto.categoria);
+            printf("Tipo Animal: %s\n", produto.tipoAnimal);
+            printf("Marca: %s\n", produto.marca);
+            printf("Descrição: %s\n", produto.descricao);
+            printf("Preço: %.2f\n", produto.preco);
+            printf("Estoque atual: %d\n", produto.estoque);
+            printf("----------------------------------------\n\n");
+            break;
         }
+    }
+        if (!encontrado) {
+        printf("Produto com ID %d não encontrado.\n", id);
+        remove(arqTemp);
+        } else {
+        remove(db_produtos);
+        rename(arqTemp, db_produtos);
+        }
+}
+
+static void alterarPreco() {
+    Produto produto;
+    int id;
+    float novoPreco;
+
+    FILE *arquivo = fopen(db_produtos, "r");
+    FILE *temp = fopen(arqTemp, "w");
+    if (arquivo == NULL || temp == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+
+    printf("Digite o ID do produto para alterar o preço: ");
+    scanf("%d", &id);
+
+    char buffer[256];
+    bool encontrado = false;
+
+    while (fgets(buffer, sizeof(buffer), arquivo)) {
+        sscanf(buffer, "%d,%49[^,],%29[^,],%49[^,],%99[^,],%f,%d", 
+            &produto.id, produto.categoria, produto.tipoAnimal, 
+            produto.marca, produto.descricao, &produto.preco, 
+            &produto.estoque);
+        
+        if (produto.id == id) {
+            encontrado = true;
+            printf("Produto selecionado: %s, %s\n", produto.marca, produto.descricao);
+            printf("Preço atual: %.2f\n", produto.preco);
+            printf("Digite o novo preço: ");
+            setbuf(stdin, NULL);
+            while (scanf("%f", &novoPreco) != 1 || novoPreco <= 0) {
+                printf("Preço inválido. Digite novamente: ");
+                setbuf(stdin, NULL);
+            }
+
+            produto.preco = novoPreco;
+            printf("Preço atualizado com sucesso para %.2f!\n", produto.preco);
+        }
+
+        // Escreve no arquivo temporário, independentemente de ser alterado
+        fprintf(temp, "%d,%s,%s,%s,%s,%.2f,%d\n", produto.id, produto.categoria, 
+                produto.tipoAnimal, produto.marca, produto.descricao, 
+                produto.preco, produto.estoque);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    if (!encontrado) {
+        printf("Produto com ID %d não encontrado.\n", id);
+        remove(arqTemp);
+    } else {
+        remove(db_produtos);
+        rename(arqTemp, db_produtos);
+    }
+}
+
+
+static void atualizarEstoque(){
+    
+    Produto produto;
+    int id;
+    int quantidade;
+
+    FILE *arquivo = fopen(db_produtos, "r");
+    FILE *temp = fopen(arqTemp, "w");
+    if (arquivo == NULL || temp == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+
+    printf("Digite o ID do produto para alterar o estoque: ");
+    scanf("%d", &id);
+
+    char buffer[256];
+    bool encontrado = false;
+
+    while (fgets(buffer, sizeof(buffer), arquivo)) {
+        sscanf(buffer, "%d,%49[^,],%29[^,],%49[^,],%99[^,],%f,%d", 
+            &produto.id, produto.categoria, produto.tipoAnimal, 
+            produto.marca, produto.descricao, &produto.preco, 
+            &produto.estoque);
+        
+        if (produto.id == id) {
+            encontrado = true;
+            printf("Produto selecionado: %s, %s\n", produto.marca, produto.descricao);
+            printf("Estoque atual: %d\n", produto.estoque);
+            printf("Digite a quantidade que será adicionada ao estoque: ");
+            setbuf(stdin, NULL);
+            while (scanf("%d", &quantidade) != 1 || quantidade <= 0) {
+                printf("Deve ser adicionado pelo menos 2. Digite novamente: ");
+                setbuf(stdin, NULL);
+            }
+
+            produto.estoque += quantidade;
+            printf("Estoque atualizado com sucesso, agora com %d unidades!\n", produto.estoque);
+        }
+
+        // Escreve no arquivo temporário, independentemente de ser alterado
+        fprintf(temp, "%d,%s,%s,%s,%s,%.2f,%d\n", produto.id, produto.categoria, 
+                produto.tipoAnimal, produto.marca, produto.descricao, 
+                produto.preco, produto.estoque);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    if (!encontrado) {
+        printf("Produto com ID %d não encontrado.\n", id);
+        remove(arqTemp);
+    } else {
+        remove(db_produtos);
+        rename(arqTemp, db_produtos);
     }
 }

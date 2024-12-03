@@ -1,5 +1,5 @@
 1,Alimento,Caes,Royal Canin,Racao premium,120.50,50
-2,Alimento,Caes,Hill's Science,Racao cientifica,140.00,30
+2,Alimento,Caes,Hill's Science,Racao cientifica,150.00,30
 3,Alimento,Caes,Purina,Racao basica,90.00,100
 4,Alimento,Caes,Pedigree,Racao para adultos,85.00,80
 5,Alimento,Caes,Nutro,Racao natural,130.00,20
@@ -7,7 +7,7 @@
 7,Alimento,Gatos,Friskies,Racao para adultos,85.00,70
 8,Alimento,Gatos,Kibbles 'n Bits,Racao para gatos,100.00,60
 9,Alimento,Gatos,Orijen,Racao premium,150.00,25
-10,Alimento,Gatos,Acana,Racao natural,145.00,30
+10,Alimento,Gatos,Acana,Racao natural,145.00,50
 11,Alimento,Passaros,Kaytee,Alimento para passaros,60.00,50
 12,Alimento,Passaros,Zupreem,Alimento para passaros,75.00,40
 13,Alimento,Passaros,Harrison's,Alimento para passaros,90.00,30
@@ -15,10 +15,10 @@
 15,Higiene,Caes,Advantix,Antipulgas,110.00,15
 16,Higiene,Caes,Earthbath,Xampu,55.00,50
 17,Higiene,Caes,Oster,Escovas,30.00,70
-18,Higiene,Gatos,Frontline,Antipulgas,90.00,25
+18,Higiene,Gatos,Frontline,Antipulgas,90.00,30
 19,Higiene,Gatos,Advantix,Antipulgas,95.00,20
 20,Higiene,Gatos,Hartz,Antipulgas,85.00,35
-21,Higiene,Gatos,Oster,Escovas,25.00,60
+21,Higiene,Gatos,Oster,Escovas,30.99,60
 22,Medicamento,Caes,Pfizer,Vacinas,200.00,10
 23,Medicamento,Caes,Merck,Vacinas,210.00,12
 24,Medicamento,Caes,Zoetis,Vacinas,180.00,15
@@ -26,5 +26,4 @@
 26,Acessorio,Caes,PetSafe,Coleiras,50.00,80
 27,Acessorio,Caes,Kong,Brinquedos,45.00,100
 28,Acessorio,Caes,Chuckit!,Brinquedos,60.00,90
-29,Acessorio,Caes,Armarkat,Camas,200.00,25
-30,seila,cao,pedigrui,racao hipertonica,20.00,100
+29,Acessorio,Caes,Armarkat,Camas,199.99,25
