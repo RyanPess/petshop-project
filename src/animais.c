@@ -124,7 +124,51 @@ static void cadastrarAnimal(){
 }
 
 static void buscarAnimalByCPF(){
-    //Implementar a função para buscar animal por CPF
+    
+    Cliente dono;
+    Animal animal;
+
+    char cpfbusca[12];
+    
+    bool encontrado = false;
+    FILE *arquivo = fopen(db_animais, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), arquivo)!= NULL) {
+        sscanf(buffer, "%99[^,],%99[^,],%99[^,],%11[^,],%f",
+        animal.nome,
+        animal.especie,
+        animal.raca,
+        animal.cpfdono,
+        &animal.peso);
+
+        printf("Digite o CPF do dono(cadastrado): ");
+        setbuf(stdin, NULL);
+        fgets(cpfbusca, 12, stdin);
+        cpfbusca[strcspn(animal.cpfdono, "\n")] = 0;
+        
+        if (strcmp(animal.cpfdono, cpfbusca) == 0) {
+            encontrado = true;
+            printf("------------------------------------------------------------------------------------------\n");
+            printf("| Nome             | Especie       | Raca              | CPF do dono            | Peso   |\n");
+            printf("------------------------------------------------------------------------------------------\n");
+            printf("| %-20s | %-16s | %-18s | %-20s | %7.2f |\n", 
+                    animal.nome,
+                    animal.especie,
+                    animal.raca,
+                    animal.cpfdono,
+                    animal.peso);
+            break;
+        }
+    }
+    fclose(arquivo);
+    if (!encontrado) {
+        printf("\n'%s' CPF não cadastrado.\n", cpfbusca);
+    }
+    return;
 }
 static void listarAnimais(){
     //Implementar a função para listar animais
