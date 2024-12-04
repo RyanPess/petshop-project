@@ -12,6 +12,8 @@ static void salvarCliente(Cliente cliente);
 static void cadastrarCliente();
 static void listarClientes();
 static void editarCliente();
+void normalizarCpf(char *cpf);
+
 
 
 //Por enquanto, será a função main
@@ -71,7 +73,6 @@ static void cadastrarCliente(){
     setbuf(stdin,NULL);
     fgets(newCliente.cpf,12,stdin);
     newCliente.cpf[strcspn(newCliente.cpf, "\n")] = 0;
-
     //Adicionei algumas regras básicas
     printf("Informe a idade do cliente: ");
     scanf("%d",&newCliente.idade);
