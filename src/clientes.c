@@ -5,7 +5,7 @@
 #include <locale.h>
 #include "clientes.h"
 //Constante, diretório do banco de dados dos clientes
-const char *db_clientes = "data/db_clientes.csv";
+static const char *db_clientes = "data/db_clientes.csv";
 
 // Implementação das funções do módulo clientes
 static void salvarCliente(Cliente cliente);
@@ -18,7 +18,6 @@ static void editarCliente();
 //quando terminarmos de implementar, será a função gerenciamentoClientes()
 
 void gerenciamentoClientes(){
-    setlocale(LC_ALL, "pt_BR.UTF8");
     int opcao;
     while (1){
         printf("1 - Cadastrar Cliente\n");
@@ -56,7 +55,7 @@ static void salvarCliente(Cliente cliente){
         return;
     }
 
-    fprintf(arquivo, "%s, %s, %d\n", cliente.name, cliente.cpf, cliente.idade);
+    fprintf(arquivo, "%s,%s,%d,%s\n", cliente.name, cliente.cpf, cliente.idade, cliente.endereco);
     fclose(arquivo);
 
     printf("\nCliente cadastrado com sucesso!\n");
@@ -68,18 +67,22 @@ static void cadastrarCliente(){
     fgets(newCliente.name,100,stdin);
     newCliente.name[strcspn(newCliente.name, "\n")] = 0; // remove o \n da string
     
-    printf("Informe o CPF do cliente:");
+    printf("Informe o CPF do cliente: ");
     setbuf(stdin,NULL);
-    fgets(newCliente.cpf,11,stdin);
+    fgets(newCliente.cpf,12,stdin);
     newCliente.cpf[strcspn(newCliente.cpf, "\n")] = 0;
 
     //Adicionei algumas regras básicas
-    printf("Qual a idade do cliente? ");
+    printf("Informe a idade do cliente: ");
     scanf("%d",&newCliente.idade);
     if(newCliente.idade < 18){
         printf("\nIdade inválida! O cliente deve ser maior de 18 anos.\n");
         return;
     }
+    printf("Informe o endereco do cliente: ");
+    setbuf(stdin,NULL);
+    fgets(newCliente.endereco,100,stdin);
+    newCliente.endereco[strcspn(newCliente.endereco, "\n")] = 0;
 
     if(strlen(newCliente.name) <= 1 || strlen(newCliente.cpf) <= 1){
         printf("\nTodos os campos devem ser preenchidos com dados corretos!\n");
@@ -90,6 +93,8 @@ static void cadastrarCliente(){
 }
 
 static void listarClientes(){
+
+    Cliente cliente;
    
     FILE *arquivo = fopen(db_clientes, "r");
     if (arquivo == NULL) {
@@ -98,23 +103,25 @@ static void listarClientes(){
     }
 
     printf("\nLista de Clientes Cadastrados:\n");
-    printf("---------------------------------------\n");
+    printf("----------------------------------------------\n");
     printf("| Nome                   | CPF       | Idade |\n");
-    printf("---------------------------------------\n");
+    printf("----------------------------------------------\n");
 
     char linha[256];
     while (fgets(linha, sizeof(linha), arquivo) !=NULL) { 
-        char nome[100], cpf[12];
-        int idade;
-
         // Divide a linha nos campos nome, cpf e idade usando sscanf
-        if (sscanf(linha, "%99[^,],%11[^,],%d", nome, cpf, &idade) == 3) {
-            printf("| %-22s | %-9s | %5d |\n", nome, cpf, idade);
+        if (sscanf(linha, "%99[^,],%11[^,],%d", 
+        cliente.name,
+        cliente.cpf,
+        &cliente.idade) == 3) {
+            // Exibe os dados do cliente
+            printf("| %-22s | %-9s | %5d |\n",
+            cliente.name,
+            cliente.cpf,
+            cliente.idade);
         }
-    
-
-    printf("---------------------------------------\n");
     }
+    printf("---------------------------------------\n");
     fclose(arquivo);
 }
 

@@ -1,5 +1,51 @@
-RYAN, 094553305, 20
-joao, 123456789, 18
-matheus, 144444, 45
-adskkk, 23244453, 42
-totosin, 39399222, 56
+nome,cpf,idade
+João Silva,12345678901,30
+Maria Oliveira,23456789012,25
+Pedro Souza,34567890123,40
+Ana Costa,45678901234,22
+Lucas Santos,56789012345,35
+Juliana Almeida,67890123456,28
+Carlos Pereira,78901234567,32
+Fernanda Rocha,89012345678,27
+Rafael Mendes,90123456789,29
+Camila Barbosa,01234567890,33
+Marcos Lima,12345098765,26
+Larissa Nogueira,23456098765,31
+Thiago Azevedo,34567098765,24
+Beatriz Teixeira,45678098765,36
+André Fernandes,56789098765,34
+Renata Moraes,67890098765,30
+Guilherme Batista,78901098765,25
+Amanda Ribeiro,89012098765,23
+Rodrigo Gonçalves,90123098765,37
+Patrícia Cardoso,01234098765,29
+Victor Cunha,12345123456,28
+Bruna Macedo,23456123456,32
+Felipe Martins,34567123456,35
+Gabriela Castro,45678123456,27
+Ricardo Dias,56789123456,30
+Carolina Freitas,67890123456,26
+Eduardo Lopes,78901123456,33
+Vanessa Carvalho,89012123456,31
+Henrique Rezende,90123123456,34
+Débora Santana,01234123456,25
+Rogério Xavier,12345234567,36
+Tatiana Brito,23456234567,29
+Leonardo Peixoto,34567234567,30
+Isabela Barreto,45678234567,28
+Daniel Monteiro,56789234567,32
+Aline Correia,67890234567,35
+Fábio Soares,78901234567,31
+Cintia Fonseca,89012234567,33
+Diego Moura,90123234567,27
+Elaine Pires,01234234567,26
+Sérgio Neves,12345345678,30
+Viviane Almeida,23456345678,29
+Alexandre Moreira,34567345678,34
+Juliana Antunes,45678345678,33
+Fernando Barros,56789345678,31
+Helena Guimarães,67890345678,24
+Maurício Vieira,78901345678,28
+Lorena Assis,89012345678,26
+Hugo Figueiredo,90123345678,35
+Ryan Pessoa,09455309535,20,seila

@@ -8,8 +8,16 @@
 
 const char *db_produtos = "data/db_produtos.csv";
 const char *arqTemp = "data/temp.csv";
-int totalProdutos = 29;
-
+int totalProdutos = 0;
+static void calcularTotalProdutos(){
+    FILE *arquivo = fopen(db_produtos, "r");
+    char linha[256];
+    while (fgets(linha, sizeof(linha), arquivo)!= NULL) {
+        if (strlen(linha) > 1)
+            totalProdutos++;
+    }
+    fclose(arquivo);
+}
 static void salvarProduto(Produto produto, int idAtual);
 static void cadastrarProduto();
 static void listarProdutos();
@@ -24,6 +32,8 @@ static void atualizarEstoque();
 void gerenciamentoProdutos(){
     //setlocale(LC_ALL, "Portuguese");
     int opcao;
+    totalProdutos = 0;
+    calcularTotalProdutos();
     while(1){
         printf("1 - Cadastrar novo produto\n");
         printf("2 - Listar produtos\n");
@@ -70,7 +80,7 @@ static void salvarProduto(Produto produto, int idAtual) {
     fprintf(
         arquivo, 
         "%d,%s,%s,%s,%s,%.2f,%d\n", 
-        idAtual,
+        idAtual + 1,
         produto.categoria, 
         produto.tipoAnimal, 
         produto.marca, 
@@ -88,21 +98,7 @@ static void salvarProduto(Produto produto, int idAtual) {
 static void cadastrarProduto() {
     Produto newProduto;
 
-    // Verificando o total de produtos cadastrados no arquivo
-    FILE *arquivo = fopen(db_produtos, "r");
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
-        return;
-    }
-    
-    int contadorProdutos = 0;
-    char linha[256];
-    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        contadorProdutos++;
-    }
-    fclose(arquivo);
-    
-    if (contadorProdutos >= 200) {
+    if (totalProdutos >= 200) {
         printf("Capacidade máxima de produtos atingida.\n");
         return;
     }
@@ -143,7 +139,6 @@ static void cadastrarProduto() {
         return;
     }
 
-    totalProdutos++;
     salvarProduto(newProduto, totalProdutos);
 }
 

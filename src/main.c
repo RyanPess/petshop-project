@@ -4,7 +4,7 @@
 //Modulos implementados
 #include "clientes.h"
 #include "produtos.h"
-//#include "animais.h"
+#include "animais.h"
 //#include "agendamentos.h"
 //#include "relatorios.h"
 
@@ -31,7 +31,7 @@ int main() {
                 break;
             case 2:
                 printf("::::::::::: Gerenciamento animal ::::::::::\n\n");
-                //gerenciamentoAnimais();
+                gerenciamentoAnimais();
                 break;
             case 3:
                 printf("::::::::::: Gerenciamento produtos::::::::::\n\n");
