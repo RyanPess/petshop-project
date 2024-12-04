@@ -123,61 +123,160 @@ static void cadastrarAnimal(){
     }
 }
 
-static void buscarAnimalByCPF(){
-    
-    Cliente dono;
+static void buscarAnimalByCPF() {
     Animal animal;
-
-    char cpfbusca[12];
-    
+    char cpfbusca[12]; // CPF do dono a ser buscado
     bool encontrado = false;
+
+    printf("Digite o CPF do dono(cadastrado): ");
+    setbuf(stdin, NULL);
+    fgets(cpfbusca, sizeof(cpfbusca), stdin);
+    cpfbusca[strcspn(cpfbusca, "\n")] = 0; // Remove o '\n'
+
     FILE *arquivo = fopen(db_animais, "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir os arquivos!\n");
+        printf("Erro ao abrir o arquivo de animais!\n");
         return;
     }
-    char buffer[256];
-    while (fgets(buffer, sizeof(buffer), arquivo)!= NULL) {
-        sscanf(buffer, "%99[^,],%99[^,],%99[^,],%11[^,],%f",
-        animal.nome,
-        animal.especie,
-        animal.raca,
-        animal.cpfdono,
-        &animal.peso);
 
-        printf("Digite o CPF do dono(cadastrado): ");
-        setbuf(stdin, NULL);
-        fgets(cpfbusca, 12, stdin);
-        cpfbusca[strcspn(animal.cpfdono, "\n")] = 0;
-        
+    printf("\nAnimais encontrados para o CPF '%s':\n", cpfbusca);
+    printf("---------------------------------------------------------------------------------------------\n");
+    printf("| Nome                | Especie       | Raca              | CPF do dono            | Peso   |\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+        sscanf(buffer, "%99[^,],%99[^,],%99[^,],%11[^,],%f",
+               animal.nome,
+               animal.especie,
+               animal.raca,
+               animal.cpfdono,
+               &animal.peso);
+
         if (strcmp(animal.cpfdono, cpfbusca) == 0) {
             encontrado = true;
-            printf("------------------------------------------------------------------------------------------\n");
-            printf("| Nome             | Especie       | Raca              | CPF do dono            | Peso   |\n");
-            printf("------------------------------------------------------------------------------------------\n");
             printf("| %-20s | %-16s | %-18s | %-20s | %7.2f |\n", 
                     animal.nome,
                     animal.especie,
                     animal.raca,
                     animal.cpfdono,
                     animal.peso);
-            break;
         }
     }
+
     fclose(arquivo);
+
     if (!encontrado) {
-        printf("\n'%s' CPF não cadastrado.\n", cpfbusca);
+        printf("Nenhum animal encontrado para o CPF informado.\n");
     }
-    return;
-}
-static void listarAnimais(){
-    //Implementar a função para listar animais
 }
 
-static void editarAnimais(){
-    //Implementar a função para editar animais cadastrados
+static void listarAnimais() {
+    Animal animal;
+
+    FILE *arquivo = fopen(db_animais, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de animais!\n");
+        return;
+    }
+
+    printf("---------------------------------------------------------------------------------------------\n");
+    printf("| Nome                | Especie       | Raca              | CPF do dono            | Peso   |\n");
+    printf("---------------------------------------------------------------------------------------------\n");
+
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+        sscanf(buffer, "%99[^,],%99[^,],%99[^,],%11[^,],%f",
+               animal.nome,
+               animal.especie,
+               animal.raca,
+               animal.cpfdono,
+               &animal.peso);
+
+        printf("| %-20s | %-16s | %-18s | %-20s | %7.2f |\n", 
+                animal.nome,
+                animal.especie,
+                animal.raca,
+                animal.cpfdono,
+                animal.peso);
+    }
+
+    fclose(arquivo);
 }
 
+static void lerString(char *buffer, size_t tamanho, const char *mensagem) {
+    printf("%s", mensagem);
+    setbuf(stdin, NULL);
+    fgets(buffer, tamanho, stdin);
+    buffer[strcspn(buffer, "\n")] = 0; // Remove o '\n'
+}
+
+static void editarAnimais() {
+    char nomeBusca[100];
+    bool encontrado = false;
+
+    printf("Digite o nome do animal que deseja editar: ");
+    setbuf(stdin, NULL);
+    fgets(nomeBusca, sizeof(nomeBusca), stdin);
+    nomeBusca[strcspn(nomeBusca, "\n")] = 0;
+
+    FILE *arquivo = fopen(db_animais, "r");
+    FILE *temp = fopen(arqTemp, "w");
+
+    if (arquivo == NULL || temp == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+
+    Animal animal;
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+        sscanf(buffer, "%99[^,],%99[^,],%99[^,],%11[^,],%f",
+               animal.nome,
+               animal.especie,
+               animal.raca,
+               animal.cpfdono,
+               &animal.peso);
+
+        if (strcmp(animal.nome, nomeBusca) == 0) {
+            encontrado = true;
+
+            printf("Novo nome do animal: ");
+            lerString(animal.nome, sizeof(animal.nome), "");
+
+            printf("Nova espécie: ");
+            lerString(animal.especie, sizeof(animal.especie), "");
+
+            printf("Nova raça: ");
+            lerString(animal.raca, sizeof(animal.raca), "");
+
+            printf("Novo peso: ");
+            while (scanf("%f", &animal.peso) != 1 || animal.peso <= 0) {
+                printf("Peso inválido. Digite novamente: ");
+                setbuf(stdin, NULL);
+            }
+        }
+
+        fprintf(temp, "%s,%s,%s,%s,%.2f\n", 
+                animal.nome, 
+                animal.especie, 
+                animal.raca, 
+                animal.cpfdono, 
+                animal.peso);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    if (encontrado) {
+        remove(db_animais);
+        rename(arqTemp, db_animais);
+        printf("Animal editado com sucesso!\n");
+    } else {
+        remove(arqTemp);
+        printf("Animal não encontrado.\n");
+    }
+}
 
 //Por enquanto, será a função main
 //quando terminarmos de implementar, será a função gerenciamentoAnimais()
