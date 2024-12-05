@@ -8,9 +8,6 @@
 #include "agendamentos.h"
 //#include "relatorios.h"
 
-char* arqTemp = "data/temp.csv";
-static void gerarArquivoTemp();
-
 int main() {
 
     int opcao;
@@ -59,10 +56,4 @@ int main() {
     }
 
     return 0;
-}
-
-static void gerarArquivoTemp(){
-    FILE *arq;
-    arq = fopen(arqTemp, "w");
-    fclose(arq);
 }
