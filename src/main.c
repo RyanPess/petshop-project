@@ -5,14 +5,18 @@
 #include "clientes.h"
 #include "produtos.h"
 #include "animais.h"
-//#include "agendamentos.h"
+#include "agendamentos.h"
 //#include "relatorios.h"
+
+char* arqTemp = "data/temp.csv";
+static void gerarArquivoTemp();
 
 int main() {
 
     int opcao;
 
     while(1){
+        gerarArquivoTemp();
         printf("::::::::::: MENU PETSHOP ::::::::::\n\n");
         printf("1 - Gerenciamento de Clientes\n");
         printf("2 - Gerenciamento de Animais\n");
@@ -39,7 +43,7 @@ int main() {
                 break;
             case 4:
                 printf("::::::::::: Agendamento ::::::::::\n\n");
-                //agenda();
+                agenda();
                 break;
             case 5:
                 printf("::::::::::: Relatório financeiro ::::::::::\n\n");
@@ -55,4 +59,10 @@ int main() {
     }
 
     return 0;
+}
+
+static void gerarArquivoTemp(){
+    FILE *arq;
+    arq = fopen(arqTemp, "w");
+    fclose(arq);
 }
