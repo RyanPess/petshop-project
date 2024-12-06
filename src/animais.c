@@ -12,7 +12,65 @@ static const char *db_clientes = "data/db_clientes.csv";
 static const char *arqTemp = "data/temp.csv"; //Para fazer alterações no arquivo é necessário um arquivo temporário
 
 
+static void calcularTotalAnimais();
+static void salvarAnimal(Animal animal);
+static void cadastrarAnimal();
+static bool buscarDonoByCPF(char* cpf);
+static void listarAnimais();
+static void buscarAnimalByCPF();
+static void lerString(char *buffer, size_t tamanho, const char *mensagem);
+static void editarAnimal();
+
+
 int totalAnimais = 0;
+
+
+//Por enquanto, será a função main
+//quando terminarmos de implementar, será a função gerenciamentoAnimais()
+
+void gerenciamentoAnimais(){
+    int opcao;
+    totalAnimais = 0;
+    calcularTotalAnimais();
+    while(1){
+        system("cls");
+        printf("\n1 - Cadastrar Animal");
+        printf("\n2 - Listar Animais");
+        printf("\n3 - Buscar animal por CPF");
+        printf("\n4 - Editar Animais");
+        printf("\n0 - Voltar");
+        printf("\n\nDigite a opção: ");
+        scanf("%d", &opcao);
+        
+        switch(opcao){
+            case 1:
+                system("cls");
+                cadastrarAnimal();
+                break;
+            case 2:
+                system("cls");
+                listarAnimais();
+                break;
+            case 3:
+                system("cls");
+                buscarAnimalByCPF();
+                break;
+            case 4:
+                system("cls");
+                editarAnimal();
+                break;
+            case 0:
+                return;
+            default:
+                system("cls");
+                printf("\nOpção inválida. Tente novamente!\n");
+                break;
+        }
+    }
+    
+        
+}
+
 static void calcularTotalAnimais(){
     FILE *arquivo = fopen(db_animais, "r");
     char linha[256];
@@ -200,7 +258,10 @@ static void listarAnimais() {
                 animal.cpfdono,
                 animal.peso);
     }
-
+    printf("---------------------------------------------------------------------------------------------\n");
+    printf("Pressione enter para voltar");
+    getchar();
+    getchar();
     fclose(arquivo);
 }
 
@@ -211,7 +272,7 @@ static void lerString(char *buffer, size_t tamanho, const char *mensagem) {
     buffer[strcspn(buffer, "\n")] = 0; // Remove o '\n'
 }
 
-static void editarAnimais() {
+static void editarAnimal() {
     char nomeBusca[100];
     bool encontrado = false;
 
@@ -276,44 +337,4 @@ static void editarAnimais() {
         remove(arqTemp);
         printf("Animal não encontrado.\n");
     }
-}
-
-//Por enquanto, será a função main
-//quando terminarmos de implementar, será a função gerenciamentoAnimais()
-
-void gerenciamentoAnimais(){
-    int opcao;
-    totalAnimais = 0;
-    calcularTotalAnimais();
-    while(1){
-        printf("\n1 - Cadastrar Animal");
-        printf("\n2 - Listar Animais");
-        printf("\n3 - Buscar animal por CPF");
-        printf("\n4 - Editar Animais");
-        printf("\n0 - Voltar");
-        printf("\n\nDigite a opção: ");
-        scanf("%d", &opcao);
-        
-        switch(opcao){
-            case 1:
-                cadastrarAnimal();
-                break;
-            case 2:
-                listarAnimais();
-                break;
-            case 3:
-                buscarAnimalByCPF();
-                break;
-            case 4:
-                editarAnimais();
-                break;
-            case 0:
-                return;
-            default:
-                printf("\nOpção inválida. Tente novamente!\n");
-                break;
-        }
-    }
-    
-        
 }

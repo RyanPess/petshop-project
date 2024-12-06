@@ -12,6 +12,58 @@ static char* db_clientes = "data/db_clientes.csv";
 static char* arqTemp = "data/temp.csv";
 
 // Implementação das funções do módulo agendamentos
+static bool buscarDonoByCPF(const char *cpf);
+static void cadastrarAgendamento();
+static void listarAgendamentos();
+static void buscarAgendamentoPorCPF();
+static void excluirAgendamento();
+
+
+//Por enquanto, será a função main
+//quando terminarmos de implementar, será a função agenda()
+
+void agenda(){
+    setlocale(LC_ALL, "Portuguese");
+    int opcao;
+
+    while(1){
+        printf("1 - Cadastrar Agendamento\n");
+        printf("2 - Listar Agendamentos\n");
+        printf("3 - Buscar agendamentos\n");
+        printf("4 - Excluir Agendamento\n");
+        printf("0 - Voltar\n");
+        printf("\nEscolha uma opção: ");
+        scanf("%d", &opcao);
+        
+        switch(opcao){
+            case 1:
+                system("cls");
+                cadastrarAgendamento();
+                break;
+            case 2:
+                system("cls");
+                listarAgendamentos();
+                break;
+            case 3:
+                system("cls");
+                buscarAgendamentoPorCPF();
+                break;
+            case 4:
+                system("cls");
+                excluirAgendamento();
+                break;
+            case 0:
+                return;
+            default:
+                system("cls");
+                printf("Opção inválida. Tente novamente!\n");
+                
+                break;
+        }
+    }
+    
+}
+
 bool buscarDonoByCPF(const char *cpf) {
     FILE *arquivo = fopen(db_clientes, "r");
     if (arquivo == NULL) {
@@ -246,43 +298,4 @@ void excluirAgendamento() {
         printf("\nNenhum agendamento encontrado para o CPF '%s' na data '%s'.\n", cpfBusca, dataBusca);
         remove("data/temp_agendamentos.csv");
     }
-}
-
-//Por enquanto, será a função main
-//quando terminarmos de implementar, será a função agenda()
-
-void agenda(){
-    setlocale(LC_ALL, "Portuguese");
-    int opcao;
-
-    while(1){
-        printf("1 - Cadastrar Agendamento\n");
-        printf("2 - Listar Agendamentos\n");
-        printf("3 - Buscar agendamentos\n");
-        printf("4 - Excluir Agendamento\n");
-        printf("0 - Voltar\n");
-        printf("\nEscolha uma opção: ");
-        scanf("%d", &opcao);
-        
-        switch(opcao){
-            case 1:
-                cadastrarAgendamento();
-                break;
-            case 2:
-                listarAgendamentos();
-                break;
-            case 3:
-                buscarAgendamentoPorCPF();
-                break;
-            case 4:
-                excluirAgendamento();
-                break;
-            case 0:
-                return;
-            default:
-                printf("Opção inválida. Tente novamente!\n");
-                break;
-        }
-    }
-    
 }

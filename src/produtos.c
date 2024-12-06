@@ -6,8 +6,8 @@
 
 #include "produtos.h"
 
-const char *db_produtos = "data/db_produtos.csv";
-const char *arqTemp = "data/temp.csv";
+static const char *db_produtos = "data/db_produtos.csv";
+static const char *arqTemp = "data/temp.csv";
 int totalProdutos = 0;
 static void calcularTotalProdutos(){
     FILE *arquivo = fopen(db_produtos, "r");
@@ -35,6 +35,7 @@ void gerenciamentoProdutos(){
     totalProdutos = 0;
     calcularTotalProdutos();
     while(1){
+        system("cls");
         printf("1 - Cadastrar novo produto\n");
         printf("2 - Listar produtos\n");
         printf("3 - Buscar produto por ID\n");
@@ -46,23 +47,29 @@ void gerenciamentoProdutos(){
         
         switch(opcao){
             case 1:
+                system("cls");
                 cadastrarProduto();
                 break;
             case 2:
+                system("cls");
                 listarProdutos();
                 break;
             case 3:
+                system("cls");
                 buscarProdutoByID();
                 break;
             case 4:
+                system("cls");
                 alterarPreco();
                 break;
             case 5:
+                system("cls");
                 atualizarEstoque();
                 break;
             case 0:
                 return;
             default:
+                system("cls");
                 printf("Opção inválida. Tente novamente!\n");
                 break;
         }
@@ -170,7 +177,9 @@ static void listarProdutos() {
         }
     }
     printf("-----------------------------------------------------------------------------------------------------------------------\n");
-
+    printf("Pressione enter para voltar");
+    getchar();
+    getchar();
     fclose(arquivo);
 }
 

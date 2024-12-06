@@ -22,6 +22,7 @@ void normalizarCpf(char *cpf);
 void gerenciamentoClientes(){
     int opcao;
     while (1){
+        system("cls");
         printf("1 - Cadastrar Cliente\n");
         printf("2 - Listar Clientes\n");
         printf("3 - Editar Cliente\n");
@@ -31,18 +32,22 @@ void gerenciamentoClientes(){
 
         switch (opcao) {
             case 1:
+                system("cls");
                 cadastrarCliente();
                 break;
             case 2:
+                system("cls");
                 listarClientes();
                 break;
             case 3:
+                system("cls");
                 editarCliente(); 
                 break;
             case 0:
                 return;
                 break;
             default:
+                system("cls");
                 printf("Opção inválida. Tente novamente!\n");
                 break;
         }
@@ -123,6 +128,9 @@ static void listarClientes(){
         }
     }
     printf("---------------------------------------\n");
+    printf("Pressione enter para voltar");
+    getchar();
+    getchar();
     fclose(arquivo);
 }
 
